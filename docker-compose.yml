@@ -1,0 +1,29 @@
+---
+version: '3.7'
+
+services:
+  dblive:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: database
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+    networks:
+      - default
+
+  db:
+    image: ghcr.io/darookee/mysql-development-proxy:main
+    depends_on:
+      - dblive
+    environment:
+      TARGET_HOST: dblive
+      TARGET_PORT: 3306
+
+  web:
+    image: php:8.2-alpine
+    environment:
+      DATABASE_CONNECTION: "mysql://user:password@db:3306/database"
+    depends_on:
+      - db

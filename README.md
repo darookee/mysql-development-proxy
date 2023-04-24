@@ -23,6 +23,8 @@ To retrieve the list of queries, send a GET request to the root URL (`/`). The r
 
 To clear the list of queries, send a GET request to `/reset`.
 
+The included `docker-compose.yml` is an example of how to use this in a development environment.
+
 ## Notes
 - This proxy is not intended for use in production environments.
 - Binary data in queries is not converted, which may result in problems when using the stored queries.
